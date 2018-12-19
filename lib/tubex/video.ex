@@ -14,6 +14,15 @@ defmodule Tubex.Video do
     end
   end
 
+  def statistics(video_id) do
+    opts = [key: Tubex.api_key, id: video_id, part: "statistics"]
+    case Tubex.API.get(Tubex.endpoint <> "/videos", opts) do
+      {:ok, response} ->
+        response
+      err -> err
+    end
+  end
+
   @doc """
   Search from youtube via query.
   """
