@@ -1,11 +1,12 @@
 defmodule Tubex.API do
 
   def get(url, query \\ []) do
-    HTTPoison.start
     query = Tubex.Utils.encode_body(query)
 
-    unless String.length(query) == 0 do
-      url = "#{url}?#{query}"
+    url = if String.length(query) != 0 do
+      "#{url}?#{query}"
+    else
+      url
     end
 
     HTTPoison.get!(url, [])
@@ -13,8 +14,6 @@ defmodule Tubex.API do
   end
 
   def post(url, body) do
-    HTTPoison.start
-
     req_body = Poison.encode!(body)
 
     HTTPoison.post!(url, req_body, [])
@@ -22,7 +21,6 @@ defmodule Tubex.API do
   end
 
   def delete(url) do
-    HTTPoison.start
     HTTPoison.delete!(url, [])
     |> handle_response
   end
