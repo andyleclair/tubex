@@ -23,6 +23,16 @@ defmodule Tubex.Video do
     end
   end
 
+  def statistics(video_ids) when is_list(video_ids) do
+    ids = video_ids |> Enum.join(",")
+    opts = [key: Tubex.api_key, id: ids, part: "statistics"]
+    case Tubex.API.get(Tubex.endpoint <> "/videos", opts) do
+      {:ok, response} ->
+        response
+      err -> err
+    end
+  end
+
   @doc """
   Search from youtube via query.
   """
