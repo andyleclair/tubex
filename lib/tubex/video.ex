@@ -14,8 +14,9 @@ defmodule Tubex.Video do
     end
   end
 
-  def statistics(video_id) do
-    opts = [key: Tubex.api_key, id: video_id, part: "statistics"]
+  def statistics(video_ids) when is_list(video_ids) do
+    ids = video_ids |> Enum.join(",")
+    opts = [key: Tubex.api_key, id: ids, part: "statistics"]
     case Tubex.API.get(Tubex.endpoint <> "/videos", opts) do
       {:ok, response} ->
         response
@@ -23,9 +24,9 @@ defmodule Tubex.Video do
     end
   end
 
-  def statistics(video_ids) when is_list(video_ids) do
-    ids = video_ids |> Enum.join(",")
-    opts = [key: Tubex.api_key, id: ids, part: "statistics"]
+
+  def statistics(video_id) do
+    opts = [key: Tubex.api_key, id: video_id, part: "statistics"]
     case Tubex.API.get(Tubex.endpoint <> "/videos", opts) do
       {:ok, response} ->
         response
